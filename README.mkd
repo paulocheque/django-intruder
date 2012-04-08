@@ -14,9 +14,9 @@ pip install django-intruder
 or
 
 ```
-  # Download zip file
-  # Extract it
-  # Execute in the extracted directory: python setup.py install
+# Download zip file
+# Extract it
+# Execute in the extracted directory: python setup.py install
 ```
 
 #### Upgrade
@@ -84,7 +84,7 @@ INTRUDER_DEFAULT_REDIRECT_VIEWS = (('', '-----'),
 
 # Change Log
 
-==Version 0.1.2==
+## Version 0.1.2
   * 2011/10/27 (yyyy/mm/dd)
   * <http://pypi.python.org/pypi/django-intruder/0.1.2>
   * Bugfixes:
@@ -99,7 +99,7 @@ INTRUDER_DEFAULT_REDIRECT_VIEWS = (('', '-----'),
   * New admin interface to facilitate to select redirect view
   * Command in admin interface to clear the Intruder cache
 
-==Version 0.1.1==
+## Version 0.1.1
   * 2011/10/12 (yyyy/mm/dd)
   * <http://pypi.python.org/pypi/django-intruder/0.1.1>
   * Ready to use in big projects
@@ -110,7 +110,7 @@ INTRUDER_DEFAULT_REDIRECT_VIEWS = (('', '-----'),
   * Cache problem when we have more than one view_name blank
   * unique=True and null=True was inconsistent for some databases
 
-==Version 0.1.0==
+## Version 0.1.0
   * 2011/10/08 (yyyy/mm/dd)
   * <http://pypi.python.org/pypi/django-intruder/0.1.0>
   * Initial Version
