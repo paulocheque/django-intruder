@@ -1,0 +1,118 @@
+Django Intruder
+-----------
+
+![Continuous Integration Status](https://secure.travis-ci.org/paulocheque/django-intruder.png?branch=master)
+
+Django Intruder is a simple and unobtrusive application to intercept requests. It is useful to enable and disable features, for continuous deployment purpouses.
+
+# Installation
+
+```
+pip install django-intruder
+```
+
+or
+
+```
+  # Download zip file
+  # Extract it
+  # Execute in the extracted directory: python setup.py install
+```
+
+#### Upgrade
+
+```
+pip install django-intruder --upgrade
+```
+
+# Motivation
+  * A tool for Feature Flip (a usual practice for Continuous Deployment) must not be intrusive. 
+  * If you have to add more source code in your project, it increase the chances to include more errors in the application.
+
+
+# Comparison with another fixture tools
+  * You do not have to add extra source code in your project for each view or url, like other tools.
+  * Completely dynamic: you can enable or disable a feature in the admin interface.
+  * List of other similar tools: http://djangopackages.com/grids/g/feature-flip/
+
+
+# Features
+  * Highly customizable: you can pass a regular expression to filter a set of urls.
+  * Simple: you can select a view to disable ou re-enable.
+  * You can define to which view you want to redirect the user.
+  * Rules are cached to improve the performance.
+
+
+# Example of Usage
+
+```python
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.admin',
+
+    'intruder',
+)
+
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # required
+    'intruder.middleware.IntruderMiddleware',
+)
+
+# Optional, you can define this to create a list of default views you want to redirect:
+INTRUDER_DEFAULT_REDIRECT_VIEWS = (('', '-----'),
+                  ('intruder.views.feature_under_maintenance', 'Feature under maintenance'),
+                  ('intruder.views.feature_is_no_longer_available', 'Feature is no longer available'))
+
+```
+
+* Access: http://YOUR_DOMAIN/admin/intruder/
+
+
+# Information about the logic of the library
+  * If a redirect view no longer exist, the rule will be ignored.
+  * If any error occur in the middleware, it will be ignored and the original view will be processed normally.
+
+
+# Links of Comments
+  * <http://www.reddit.com/r/reddit.com/comments/l6fbz/djangointruder_feature_flip_for_continuous/>
+  * <http://pythonsmalltalk.blogspot.com/2011/10/feature-flip-para-continuous-deployment.html>
+  * <http://simpleextremeprogramming.blogspot.com/2011/10/feature-flip-for-continuous-deployment.html>
+
+
+# Change Log
+
+==Version 0.1.2==
+  * 2011/10/27 (yyyy/mm/dd)
+  * <http://pypi.python.org/pypi/django-intruder/0.1.2>
+  * Bugfixes:
+  * Removing Permission from admin interface
+  * Handling middleware errors
+  
+  * Updates:
+  * Better layout for default redirect pages
+  
+  * New features: 
+  * INTRUDER_DEFAULT_REDIRECT_VIEWS property in settings
+  * New admin interface to facilitate to select redirect view
+  * Command in admin interface to clear the Intruder cache
+
+==Version 0.1.1==
+  * 2011/10/12 (yyyy/mm/dd)
+  * <http://pypi.python.org/pypi/django-intruder/0.1.1>
+  * Ready to use in big projects
+  * Changes in the database schema (no migrations, it is just the beginning of this project)
+  * Now it do not block the admin interface
+  * Bugfixes: 
+  * Clear cache on object delete
+  * Cache problem when we have more than one view_name blank
+  * unique=True and null=True was inconsistent for some databases
+
+==Version 0.1.0==
+  * 2011/10/08 (yyyy/mm/dd)
+  * <http://pypi.python.org/pypi/django-intruder/0.1.0>
+  * Initial Version
+  * Experimental Version
+
