@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Django-intruder : django-intruder" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Django-intruder</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/paulocheque/django-intruder">Fork Me on GitHub</a>
+
+          <h1 id="project_title">Django-intruder</h1>
+          <h2 id="project_tagline">django-intruder</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/paulocheque/django-intruder/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/paulocheque/django-intruder/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>Django Intruder</h2>
+
+<p><img src="https://secure.travis-ci.org/paulocheque/django-intruder.png?branch=master" alt="Continuous Integration Status"></p>
+
+<p>Django Intruder is a simple and unobtrusive application to intercept requests. It is useful to enable and disable features, for continuous deployment purpouses.</p>
+
+<h1>Installation</h1>
+
+<pre><code>pip install django-intruder
+</code></pre>
+
+<p>or</p>
+
+<pre><code># Download zip file
+# Extract it
+# Execute in the extracted directory: python setup.py install
+</code></pre>
+
+<h4>Upgrade</h4>
+
+<pre><code>pip install django-intruder --upgrade
+</code></pre>
+
+<h1>Motivation</h1>
+
+<ul>
+<li>A tool for Feature Flip (a usual practice for Continuous Deployment) must not be intrusive. </li>
+<li>If you have to add more source code in your project, it increase the chances to include more errors in the application.</li>
+</ul><h1>Comparison with another fixture tools</h1>
+
+<ul>
+<li>You do not have to add extra source code in your project for each view or url, like other tools.</li>
+<li>Completely dynamic: you can enable or disable a feature in the admin interface.</li>
+<li>List of other similar tools: <a href="http://djangopackages.com/grids/g/feature-flip/">http://djangopackages.com/grids/g/feature-flip/</a></li>
+</ul><h1>Features</h1>
+
+<ul>
+<li>Highly customizable: you can pass a regular expression to filter a set of urls.</li>
+<li>Simple: you can select a view to disable ou re-enable.</li>
+<li>You can define to which view you want to redirect the user.</li>
+<li>Rules are cached to improve the performance.</li>
+</ul><h1>Example of Usage</h1>
+
+<div class="highlight">
+<pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">'django.contrib.auth'</span><span class="p">,</span>
+    <span class="s">'django.contrib.contenttypes'</span><span class="p">,</span>
+    <span class="s">'django.contrib.sessions'</span><span class="p">,</span>
+    <span class="s">'django.contrib.admin'</span><span class="p">,</span>
+
+    <span class="s">'intruder'</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">'django.contrib.sessions.middleware.SessionMiddleware'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth.middleware.AuthenticationMiddleware'</span><span class="p">,</span> <span class="c"># required</span>
+    <span class="s">'intruder.middleware.IntruderMiddleware'</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c"># Optional, you can define this to create a list of default views you want to redirect:</span>
+<span class="n">INTRUDER_DEFAULT_REDIRECT_VIEWS</span> <span class="o">=</span> <span class="p">((</span><span class="s">''</span><span class="p">,</span> <span class="s">'-----'</span><span class="p">),</span>
+                  <span class="p">(</span><span class="s">'intruder.views.feature_under_maintenance'</span><span class="p">,</span> <span class="s">'Feature under maintenance'</span><span class="p">),</span>
+                  <span class="p">(</span><span class="s">'intruder.views.feature_is_no_longer_available'</span><span class="p">,</span> <span class="s">'Feature is no longer available'</span><span class="p">))</span>
+
+</pre>
+</div>
+
+
+<ul>
+<li>Access: http://YOUR_DOMAIN/admin/intruder/</li>
+</ul><h1>Information about the logic of the library</h1>
+
+<ul>
+<li>If a redirect view no longer exist, the rule will be ignored.</li>
+<li>If any error occur in the middleware, it will be ignored and the original view will be processed normally.</li>
+</ul><h1>Links of Comments</h1>
+
+<ul>
+<li><a href="http://www.reddit.com/r/reddit.com/comments/l6fbz/djangointruder_feature_flip_for_continuous/">http://www.reddit.com/r/reddit.com/comments/l6fbz/djangointruder_feature_flip_for_continuous/</a></li>
+<li><a href="http://pythonsmalltalk.blogspot.com/2011/10/feature-flip-para-continuous-deployment.html">http://pythonsmalltalk.blogspot.com/2011/10/feature-flip-para-continuous-deployment.html</a></li>
+<li><a href="http://simpleextremeprogramming.blogspot.com/2011/10/feature-flip-for-continuous-deployment.html">http://simpleextremeprogramming.blogspot.com/2011/10/feature-flip-for-continuous-deployment.html</a></li>
+</ul><h1>Change Log</h1>
+
+<h2>Version 0.1.2</h2>
+
+<ul>
+<li>2011/10/27 (yyyy/mm/dd)</li>
+<li><a href="http://pypi.python.org/pypi/django-intruder/0.1.2">http://pypi.python.org/pypi/django-intruder/0.1.2</a></li>
+<li>Bugfixes:</li>
+<li>Removing Permission from admin interface</li>
+<li><p>Handling middleware errors</p></li>
+<li><p>Updates:</p></li>
+<li><p>Better layout for default redirect pages</p></li>
+<li><p>New features: </p></li>
+<li><p>INTRUDER_DEFAULT_REDIRECT_VIEWS property in settings</p></li>
+<li><p>New admin interface to facilitate to select redirect view</p></li>
+<li><p>Command in admin interface to clear the Intruder cache</p></li>
+</ul><h2>Version 0.1.1</h2>
+
+<ul>
+<li>2011/10/12 (yyyy/mm/dd)</li>
+<li><a href="http://pypi.python.org/pypi/django-intruder/0.1.1">http://pypi.python.org/pypi/django-intruder/0.1.1</a></li>
+<li>Ready to use in big projects</li>
+<li>Changes in the database schema (no migrations, it is just the beginning of this project)</li>
+<li>Now it do not block the admin interface</li>
+<li>Bugfixes: </li>
+<li>Clear cache on object delete</li>
+<li>Cache problem when we have more than one view_name blank</li>
+<li>unique=True and null=True was inconsistent for some databases</li>
+</ul><h2>Version 0.1.0</h2>
+
+<ul>
+<li>2011/10/08 (yyyy/mm/dd)</li>
+<li><a href="http://pypi.python.org/pypi/django-intruder/0.1.0">http://pypi.python.org/pypi/django-intruder/0.1.0</a></li>
+<li>Initial Version</li>
+<li>Experimental Version</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Django-intruder maintained by <a href="https://github.com/paulocheque">paulocheque</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
